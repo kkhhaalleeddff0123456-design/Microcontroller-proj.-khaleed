@@ -9,7 +9,7 @@ LDFLAGS = -mmcu=atmega32
 
 # Auto-discover sources
 C_SOURCES := \
-    $(wildcard Project_04_Vehicle_Dashboard/*.c) \
+    $(wildcard Vehicle_Dashboard_APP/*.c) \
     $(wildcard MCL/*.c) \
     $(wildcard MCL/*/*.c) \
     $(wildcard MCL/*/*/*.c) \
@@ -21,7 +21,7 @@ OBJS   := $(patsubst %.c,build/%.o,$(C_SOURCES))
 TARGET := build/firmware
 
 # Auto include folders (for #include "gpio.h" in MCL/GPIO/)
-INCLUDE_DIRS := Project_04_Vehicle_Dashboard Service \
+INCLUDE_DIRS := Vehicle_Dashboard_APP Service \
     $(sort $(dir $(wildcard MCL/*/*.h)) $(wildcard MCL/*/*/*.h)) \
     $(sort $(dir $(wildcard HAL/*/*.h)) $(wildcard HAL/*/*/*.h))
 CFLAGS += $(addprefix -I,$(INCLUDE_DIRS))
