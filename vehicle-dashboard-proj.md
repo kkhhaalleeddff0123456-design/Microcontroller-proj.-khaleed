@@ -100,16 +100,6 @@ Cluster_Project/
     ├── FSM.c / FSM.h               # Ignition state control & alert threshold logic
     └── main.c                      # Application entry point & main scheduling loop
 
-Module Layering Responsibilities
-
-Service Layer: Ensures portable data types and fast bitwise register access across all drivers.
-
-MCL Layer: Handles direct memory-mapped register configuration for the ATmega32 internal peripherals.
-
-HAL Layer: Abstracts external hardware modules from MCU pin specifics, providing high-level APIs to the application.
-
-Application Layer (src/): Implements system business logic, state transitions, signal filtering algorithms, and main scheduling loop without direct register manipulation.
-
 ### Hardware Interface & Pin Allocation
 
 | Module / Peripheral | ATmega32 Pin | Direction | Description |
