@@ -38,9 +38,9 @@ output, or managing a piece of state.
 | M4 | **Turn Indicator Module** | Left / right turn signals + hazard blinking (DONE)|
 | M5 | **Warning Lamps Module** | 8-lamp cluster over shared SPI (74HC595) (DONE)|
 | M6 | **Odometer Module** | Distance integration + wear-levelled EEPROM persistence (DONE)|
-| M7 | **Display Module** | LCD paging over I2C |
-| M8 | **Ignition FSM Module** | Key states, cranking, limp-home, stall |
-| M9 | **Console Module** | UART diagnostics & command parser |
+| M7 | **Display Module** | LCD paging over I2C (DONE)|
+| M8 | **Ignition FSM Module** | Key states, cranking, limp-home, stall (DONE)|
+| M9 | **Console Module** | UART diagnostics & command parser (DONE)|
 | M10 | **Chime Module** | Buzzer tone patterns |
 
 All modules sit on the same layered base (`APP → HAL → MCAL → LIB`) and share
