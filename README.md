@@ -11,7 +11,9 @@
 | Field | Value |
 |-------|-------|
 | **Project code** | `PRJ-04-DASHBOARD` |
-| **Developers** | **Khaled** & **Peter** |
+| **Developers** | **Khaled fathy** & **Peter wasif** |
+| **Khaled's E-mail** | **kkhhaalleeddff0123456@gmail.com** |
+| **Peter's E-mail** | **peter.elsabakhawy@gmail.com** |
 | **Build window** | Days 11 – 15 (Jul 26 – Jul 30, 2026) |
 | **Demo & submission** | July 30, 2026 |
 | **MCU** | ATmega32A @ 8 MHz |
