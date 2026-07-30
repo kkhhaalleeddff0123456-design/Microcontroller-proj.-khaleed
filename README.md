@@ -48,7 +48,7 @@ one 10 ms scheduler tick.
 
 ---
 
-## 4. M1 — Gauges Module
+## 4. M1 — Gauges Module (DONE)
 
 **Owns:** ADC acquisition and scaling for the four analog sensors.
 
@@ -69,7 +69,7 @@ one 10 ms scheduler tick.
 
 ---
 
-## 5. M2 — Speedometer Module
+## 5. M2 — Speedometer Module (DONE)
 
 **Owns:** road-speed measurement from the wheel-speed pulse train.
 
@@ -90,7 +90,7 @@ one 10 ms scheduler tick.
 
 ---
 
-## 6. M3 — Tachometer Module
+## 6. M3 — Tachometer Module (DONE)
 
 **Owns:** engine RPM from ignition pulses.
 
@@ -110,7 +110,7 @@ one 10 ms scheduler tick.
 
 ---
 
-## 7. M4 — Turn Indicator Module
+## 7. M4 — Turn Indicator Module (DONE)
 
 **Owns:** left/right turn signal and hazard blinking.
 
@@ -129,7 +129,7 @@ one 10 ms scheduler tick.
 
 ---
 
-## 8. M5 — Warning Lamps Module
+## 8. M5 — Warning Lamps Module (DONE)
 
 **Owns:** the 8-lamp cluster, driven through a 74HC595 shift register that
 shares the SPI bus with the EEPROM.
@@ -176,7 +176,7 @@ still show in `warnMask`):
 
 ---
 
-## 9. M6 — Odometer Module
+## 9. M6 — Odometer Module (DONE)
 
 **Owns:** distance integration and crash-safe EEPROM persistence.
 
@@ -197,7 +197,7 @@ still show in `warnMask`):
 
 ---
 
-## 10. M7 — Display Module
+## 10. M7 — Display Module (DONE)
 
 **Owns:** the 16×2 LCD (via PCF8574 I2C expander) and page cycling.
 
