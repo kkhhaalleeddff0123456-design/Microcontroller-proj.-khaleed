@@ -215,7 +215,7 @@ still show in `warnMask`):
 
 ---
 
-## 11. M8 — Ignition FSM Module
+## 11. M8 — Ignition FSM Module (DONE)
 
 **Owns:** the ignition key state machine.
 
