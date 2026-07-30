@@ -43,7 +43,7 @@ output, or managing a piece of state.
 | M7 | **Display Module** | LCD paging over I2C (DONE)|
 | M8 | **Ignition FSM Module** | Key states, cranking, limp-home, stall (DONE)|
 | M9 | **Console Module** | UART diagnostics & command parser (DONE)|
-| M10 | **Chime Module** | Buzzer tone patterns |
+| M10 | **Chime Module** | Buzzer tone patterns (Done) |
 
 All modules sit on the same layered base (`APP → HAL → MCAL → LIB`) and share
 one 10 ms scheduler tick.
@@ -239,7 +239,7 @@ OFF → ACC → IGNITION → BULBCHECK → CRANKING → RUNNING
 
 ---
 
-## 12. M9 — Console Module
+## 12. M9 — Console Module (Done)
 
 **Owns:** the UART diagnostics port (9600 8N1).
 
@@ -250,7 +250,7 @@ OFF → ACC → IGNITION → BULBCHECK → CRANKING → RUNNING
 
 ---
 
-## 13. M10 — Chime Module
+## 13. M10 — Chime Module (Done)
 
 **Owns:** buzzer tone patterns on `PD7`/OC2 (Timer2 PWM).
 
@@ -260,7 +260,7 @@ OFF → ACC → IGNITION → BULBCHECK → CRANKING → RUNNING
 
 ---
 
-## 14. Shared Scheduler
+## 14. Shared Scheduler (Done)
 
 | Task | Period | Module(s) |
 |------|:------:|-----------|
