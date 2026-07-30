@@ -32,12 +32,12 @@ output, or managing a piece of state.
 
 | # | Module | Job |
 |---|--------|-----|
-| M1 | **Gauges Module** | Reads fuel, coolant, battery, oil pressure (4 analog channels) |
-| M2 | **Speedometer Module** | Wheel-speed period measurement (Timer1 Input Capture) |
-| M3 | **Tachometer Module** | Engine RPM counting (INT0, 250 ms window) |
-| M4 | **Turn Indicator Module** | Left / right turn signals + hazard blinking |
-| M5 | **Warning Lamps Module** | 8-lamp cluster over shared SPI (74HC595) |
-| M6 | **Odometer Module** | Distance integration + wear-levelled EEPROM persistence |
+| M1 | **Gauges Module** | Reads fuel, coolant, battery, oil pressure (4 analog channels) (DONE)|
+| M2 | **Speedometer Module** | Wheel-speed period measurement (Timer1 Input Capture) (DONE)|
+| M3 | **Tachometer Module** | Engine RPM counting (INT0, 250 ms window) (DONE)|
+| M4 | **Turn Indicator Module** | Left / right turn signals + hazard blinking (DONE)|
+| M5 | **Warning Lamps Module** | 8-lamp cluster over shared SPI (74HC595) (DONE)|
+| M6 | **Odometer Module** | Distance integration + wear-levelled EEPROM persistence (DONE)|
 | M7 | **Display Module** | LCD paging over I2C |
 | M8 | **Ignition FSM Module** | Key states, cranking, limp-home, stall |
 | M9 | **Console Module** | UART diagnostics & command parser |

@@ -18,6 +18,7 @@
  *  PD0/TXD  = UART TX
  *  PD1/RXD  = UART RX
  *  PD2      = Tachometer pulse input
+ *  PD3      = LCD page button (active low)
  *  PD6/ICP1 = Speed sensor (wheel, Timer1 Input Capture)
  *  PD7/OC2  = Buzzer (Timer2 PWM)
  *
@@ -96,7 +97,9 @@ static volatile uint32_h g_spd_prev  = 0;
 static volatile uint32_h g_spd_delta = 0;
 static volatile uint8_h  g_spd_new   = 0;
 static volatile uint32_h g_spd_last_cap = 0; /* for timeout */
+static volatile uint16_h g_wheel_pulses = 0;
 static uint16_h g_speed_kmh = 0;
+static void ODO_AddPulse(void);
 
 static void SPD_OnOverflow(void) { g_spd_ovf++; }
 
@@ -110,10 +113,22 @@ ISR(TIMER1_CAPT_vect)
     g_spd_prev      = now;
     g_spd_last_cap  = now;
     g_spd_new       = 1;
+    g_wheel_pulses++;
 }
 
 static void SPD_Update(void)
 {
+    uint16_h pulses;
+    cli();
+    pulses = g_wheel_pulses;
+    g_wheel_pulses = 0;
+    sei();
+
+    while (pulses--)
+    {
+        ODO_AddPulse();
+    }
+
     /* timeout: no pulse for ~1 s (125kHz/65536 ~ 1.9 ovf/s, use 2 ovf) */
     uint32_h now = ((uint32_h)g_spd_ovf << 16) | TIMER_TCNT1_REG;
     if ((now - g_spd_last_cap) > 125000UL) { g_speed_kmh = 0; return; }
@@ -217,8 +232,39 @@ static void ODO_AddPulse(void)
  * ================================================================ */
 static LCD_Hd44780_HandleType g_lcd;
 
-typedef enum { PG_MAIN=0, PG_ENGINE, PG_ELECTRICAL, PG_TRIP, PG_MAX } PageType;
+typedef enum { PG_MAIN=0, PG_ENGINE, PG_ELECTRICAL, PG_TRIP, PG_DIAG, PG_MAX } PageType;
 static PageType g_page = PG_MAIN;
+static uint8_h g_button_count = 0;
+static uint8_h g_button_state = 1;
+static uint8_h g_button_event = 0;
+
+static void DSP_Next(void)
+{
+    g_page = (PageType)((g_page + 1u) % PG_MAX);
+}
+
+static void BTN_Update(void)
+{
+    uint8_h raw = GPIO_GetPinStatus(GPIO_PORTD, GPIO_PIN3);
+    if (raw == 0)
+    {
+        if (g_button_count < 5u) g_button_count++;
+    }
+    else
+    {
+        if (g_button_count > 0u) g_button_count--;
+    }
+
+    if (g_button_count == 5u && g_button_state == 1)
+    {
+        g_button_state = 0;
+        g_button_event = 1;
+    }
+    else if (g_button_count == 0u && g_button_state == 0)
+    {
+        g_button_state = 1;
+    }
+}
 
 static void DSP_Render(void)
 {
@@ -253,6 +299,11 @@ static void DSP_Render(void)
         case PG_TRIP:
             snprintf(r0, 17, "TRIP:%5lu m   ", g_trip_mm/1000u);
             snprintf(r1, 17, "ODO: %5lu km  ", g_odo_mm/1000000u);
+            break;
+
+        case PG_DIAG:
+            snprintf(r0, 17, "PULSES:%4u SPD:%3u ", g_wheel_pulses, g_speed_kmh);
+            snprintf(r1, 17, "RPM:%4u FUEL:%3u%% ", g_rpm, g_fuel_pct);
             break;
 
         default: break;
@@ -354,6 +405,10 @@ static void hw_init(void)
     GPIO_SetPinValue(GPIO_PORTB, GPIO_PIN5, 0);
     GPIO_SetPinValue(GPIO_PORTB, GPIO_PIN6, 0);
 
+    /* PD3 = LCD page button input + pull-up */
+    GPIO_SetPinDirection(GPIO_PORTD, GPIO_PIN3, GPIO_INPUT);
+    GPIO_SetPinValue(GPIO_PORTD, GPIO_PIN3, 1);
+
     /* PD7 = buzzer output */
     GPIO_SetPinDirection(GPIO_PORTD, GPIO_PIN7, GPIO_OUTPUT);
 
@@ -447,6 +502,12 @@ int main(void)
 
         /* 10 ms — inputs + FSM */
         TRN_Update();
+        BTN_Update();
+        if (g_button_event)
+        {
+            g_button_event = 0;
+            DSP_Next();
+        }
         FSM_Run();
 
         /* 50 ms — lamps */
